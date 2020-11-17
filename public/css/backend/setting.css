@@ -1,0 +1,23 @@
+.wppc-tab-first-tr >th{
+    width: auto;
+    padding: 0px;
+}
+.wppc_hide_element{
+    display: none;
+}
+.wppc-description{
+    font-style: italic;
+}
+.wppc-footer-message{
+    position: absolute;
+    bottom: 5px;    
+    left: 37%;
+    padding: 10px 20px;
+    color: #555d66;
+}
+.wppc-description span{
+    font-size: inherit;
+    text-decoration: none;
+    line-height: unset;
+    width: 15px;
+}

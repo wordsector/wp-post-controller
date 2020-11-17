@@ -30,7 +30,8 @@ function wppc_filter_the_content($content){
             $count    = get_post_meta( get_the_ID(), 'wppc_post_views_count', true );
             
             if($count > 0){
-                $views = '<p>Post Views : '.esc_html($count). "</p>";
+                $views = '<div class="wppc-post-views-box"><span class="wppc-views-box-str">Post Views</span> : <span class="wppc-views-box-int">'.esc_html($count). "</span></div>";
+                wp_enqueue_style( 'wppc-style-css', WPPC_PLUGIN_URL . 'public/css/frontend/style.css', false , WPPC_VERSION );   
             }
     
             if(isset($wppc_settings['views_position'])){
