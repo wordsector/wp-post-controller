@@ -21,7 +21,7 @@ class WPPC_Admin_Setting {
         add_action( 'admin_init', array($this, 'register_setting') );
         add_action( 'admin_enqueue_scripts', array($this,'enqueue_scripts') );
         add_action( 'wp_ajax_wppc_send_query', array($this, 'send_query') );
-        add_action ( 'admin_footer', array($this, 'footer_content') );
+        add_action( 'admin_footer', array($this, 'footer_content') );
                              
     }
     public function enqueue_scripts($hook){
@@ -148,7 +148,7 @@ class WPPC_Admin_Setting {
         $setting_tab = wppc_selected_tab('post_views', array('post_views', 'support'));            
     
         ?>
-        <div class="wppc-settings-container">
+        <div class="wppc-setting-container">
         <div class="wrap">	
             <h1 class="wp-heading-inline"> <?php echo wppc_escape_html( 'WP Post Controller' ); ?></h1><br>		
         <div>
@@ -195,10 +195,10 @@ class WPPC_Admin_Setting {
             <div class="wppc_support_tab_content">                   
                 <ul>
                     <li>
-                       <input type="text" id="wppc_query_email" name="wppc_query_email" placeholder="Enter a valid email">
+                       <input type="text" id="wppc_query_email" name="wppc_query_email" placeholder="<?php echo wppc_escape_html('Enter a valid email'); ?>">
                     </li>
                     <li>                    
-                        <div><textarea rows="8" cols="80" id="wppc_query_message" name="wppc_query_message" placeholder="Write your query, suggestion or requested features."></textarea></div>
+                        <div><textarea rows="8" cols="80" id="wppc_query_message" name="wppc_query_message" placeholder="<?php echo wppc_escape_html('Write your query, suggestion or requested features.'); ?>"></textarea></div>
                         <span class="wppc-query-success wppc_hide_element"><?php echo wppc_escape_html('Thank you for contacting us, Please wait we will get back to you shortly'); ?></span>
                         <span class="wppc-query-error wppc_hide_element"><?php echo wppc_escape_html('Something went wrong. Please contact via email at wordsector@gmail.com'); ?></span>
                     </li>                
