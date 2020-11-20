@@ -2,6 +2,16 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+function wppc_get_custom_post_types(){
+
+    $post_types = array();
+    $post_types = get_post_types( array( 'public' => true ), 'names' );    
+    unset($post_types['attachment']);
+
+    return $post_types;
+    
+}
+
 function wppc_selected_tab( $default = '', $available = array() ) {
 
     $tab = isset( $_GET['tab'] ) ? sanitize_text_field(wp_unslash($_GET['tab'])) : $default;            

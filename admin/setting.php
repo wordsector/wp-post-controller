@@ -212,6 +212,7 @@ class WPPC_Admin_Setting {
         <?php
 
     }
+    
 
     public function post_views_tab_callback(){
 
@@ -227,8 +228,22 @@ class WPPC_Admin_Setting {
             <tr valign="top">
             <th scope="row"><?php echo wppc_escape_html('Enable On'); ?></th>
             <td>
-                <input type="checkbox" name="wppc_settings[views_enable_on][post]" value="1" <?php echo ( isset($wppc_settings['views_enable_on']['post']) ? 'checked': '' ); ?> /> <?php echo wppc_escape_html('Post'); ?>
-                <input type="checkbox" name="wppc_settings[views_enable_on][page]" value="1" <?php echo ( isset($wppc_settings['views_enable_on']['page']) ? 'checked': '' ); ?> /> <?php echo wppc_escape_html('Page'); ?> 
+
+                <?php
+                
+                $post_types = wppc_get_custom_post_types();
+
+                if($post_types){
+
+                    foreach ($post_types as $key => $value) {
+                        
+                        echo '  <input class="wppc_pv_post_type" type="checkbox" name="wppc_settings[views_enable_on]['.esc_attr($key).']" value="1" '.(isset($wppc_settings["views_enable_on"][$key]) ? "checked": "").' /> ' . ucwords(wppc_escape_html($value));
+
+                    }
+
+                }
+
+                ?>                
                 <p class="wppc-description"> <?php echo wppc_escape_html('Select the post type whereever you want to enable a post view counter'); ?> </p>
             </td>
             </tr>                
@@ -243,7 +258,7 @@ class WPPC_Admin_Setting {
             </tr>
         </table>
 
-        <h3><?php echo wppc_escape_html('Frontend Settings'); ?></h3>
+        <h3><?php echo wppc_escape_html('Frontend Setting'); ?></h3>
 
         <table class="form-table">                
             <tr valign="top">

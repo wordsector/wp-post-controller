@@ -22,7 +22,7 @@ function wppc_posts_custom_column_views( $column ) {
         $count = get_post_meta( get_the_ID(), 'wppc_post_views_count', true );
 
         if($count > 0){
-            echo esc_html($count. " views");
+            echo esc_html($count);
         }else{
             echo "0";
         }
@@ -34,7 +34,9 @@ function wppc_posts_column_views( $columns ) {
 
     $wppc_settings = get_option('wppc_settings');
 
-    if( (isset($wppc_settings['views_column']) && $wppc_settings['views_column'] == 'enable') && (isset($wppc_settings['views_enable_on']['post']) && $wppc_settings['views_enable_on']['post'] == 1) ){
+    $post_type = get_post_type();
+
+    if( (isset($wppc_settings['views_column']) && $wppc_settings['views_column'] == 'enable') && (isset($wppc_settings['views_enable_on'][$post_type]) && $wppc_settings['views_enable_on'][$post_type] == 1) ){
         $columns['wppc_post_views'] = 'Views';
     }
     
