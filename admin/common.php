@@ -2,6 +2,13 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+add_action( 'admin_enqueue_scripts', 'wppc_enqueue_scripts' );
+
+function wppc_enqueue_scripts( $hook ) {                                        
+    
+        wp_enqueue_style( 'wppc-common-admin-css', WPPC_PLUGIN_URL . 'public/css/backend/common-admin.css', false , WPPC_VERSION );   
+}
+
 function wppc_get_custom_post_types(){
 
     $post_types = array();
@@ -68,4 +75,18 @@ function wppc_escape_html($string){
 
         return esc_html__( $string , 'wp-post-controller');
     
+}
+
+function wppc_validate_nonce($data){
+
+        $response = true;
+
+        if ( ! isset( $data['wppc_nonce'] ) ){
+                $response = false; 
+        }
+        if ( !wp_verify_nonce( $data['wppc_nonce'], 'wppc_check_nonce' ) ){
+                $response = false;
+        }
+
+        return $response;
 }

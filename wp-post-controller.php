@@ -23,6 +23,7 @@ define('WPPC_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 
 require_once WPPC_PLUGIN_DIR_PATH .'admin/common.php';
-require_once WPPC_PLUGIN_DIR_PATH .'admin/function.php';
 require_once WPPC_PLUGIN_DIR_PATH .'admin/setting.php';
 require_once WPPC_PLUGIN_DIR_PATH .'admin/setup.php';
+require_once WPPC_PLUGIN_DIR_PATH .'admin/dbmapper.php';
+require_once WPPC_PLUGIN_DIR_PATH .'admin/postviews.php';

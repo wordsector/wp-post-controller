@@ -246,6 +246,15 @@ class WPPC_Admin_Setting {
                 ?>                
                 <p class="wppc-description"> <?php echo wppc_escape_html('Select the post type whereever you want to enable a post view counter'); ?> </p>
             </td>
+            </tr>
+
+            <tr valign="top">
+            <th scope="row"><?php echo wppc_escape_html('Counter Mode'); ?></th>
+            <td>
+                <input type="radio" id="php_counter_mode" name="wppc_settings[counter_mode]" value="php" <?php echo (isset($wppc_settings['counter_mode']) && $wppc_settings['counter_mode'] == 'php' ? 'checked' : '') ?> > <?php echo wppc_escape_html('PHP'); ?>
+                <input type="radio" id="ajax_counter_mode" name="wppc_settings[counter_mode]" value="ajax" <?php echo (isset($wppc_settings['counter_mode']) && $wppc_settings['counter_mode'] == 'ajax' ? 'checked' : '') ?> > <?php echo wppc_escape_html('AJAX'); ?>
+                <p class="wppc-description"><?php echo wppc_escape_html('Select Ajax for accurate result, If you are using any cache plugin'); ?></p>    
+            </td>
             </tr>                
 
             <tr valign="top">
