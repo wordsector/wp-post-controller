@@ -53,11 +53,9 @@ class WPPC_Post_Views {
     }
     public function frontend_script_enqueue($hook){
         
-        global $post;        
-
-        $wppc_settings = get_option('wppc_settings');
-
-        if($wppc_settings['counter_mode'] == 'ajax'){
+        global $post, $wppc_setting;        
+        
+        if($wppc_setting['counter_mode'] == 'ajax'){
 
             $local = array(     
                 'current_url'                  => wppc_current_url(),             
@@ -92,11 +90,11 @@ class WPPC_Post_Views {
     
     public function posts_column_views( $columns ) {
     
-        $wppc_settings = get_option('wppc_settings');
+        global $wppc_setting;
     
         $post_type = get_post_type();
     
-        if( (isset($wppc_settings['views_column']) && $wppc_settings['views_column'] == 'enable') && (isset($wppc_settings['views_enable_on'][$post_type]) && $wppc_settings['views_enable_on'][$post_type] == 1) ){
+        if( (isset($wppc_setting['views_column']) && $wppc_setting['views_column'] == 'enable') && (isset($wppc_setting['views_enable_on'][$post_type]) && $wppc_setting['views_enable_on'][$post_type] == 1) ){
             $columns['wppc_post_views'] = 'Views';
         }
         
@@ -120,9 +118,9 @@ class WPPC_Post_Views {
     
     public function pages_column_views( $columns ) {
     
-        $wppc_settings = get_option('wppc_settings');
+        global $wppc_setting;
         
-        if( (isset($wppc_settings['views_column']) && $wppc_settings['views_column'] == 'enable') && (isset($wppc_settings['views_enable_on']['page']) && $wppc_settings['views_enable_on']['page'] == 1) ){
+        if( (isset($wppc_setting['views_column']) && $wppc_setting['views_column'] == 'enable') && (isset($wppc_setting['views_enable_on']['page']) && $wppc_setting['views_enable_on']['page'] == 1) ){
             $columns['wppc_post_views'] = 'Views';
         }
         
@@ -131,18 +129,16 @@ class WPPC_Post_Views {
         
     public function filter_the_content($content){
 
-        global $post;
+        global $post, $wppc_setting;
 
         $post_type = get_post_type();
-
-        $wppc_settings = get_option('wppc_settings');
         
-        if( isset($wppc_settings['views_enable_on'][$post_type]) ){
+        
+        if( isset($wppc_setting['views_enable_on'][$post_type]) ){
 
-            if( isset($wppc_settings['counter_mode']) && $wppc_settings['counter_mode'] == 'php' ){
+            if( isset($wppc_setting['counter_mode']) && $wppc_setting['counter_mode'] == 'php' ){
                 $this->query->set_post_view(get_the_ID());
-            }            
-            $wppc_settings = get_option('wppc_settings');
+            }                        
             $position = '';
             $views    = 0;
             $count    = $this->query->get_total_count_by_post(get_the_ID());
@@ -152,8 +148,8 @@ class WPPC_Post_Views {
                 wp_enqueue_style( 'wppc-style-css', WPPC_PLUGIN_URL . 'public/css/frontend/style.css', false , WPPC_VERSION );   
             }
     
-            if(isset($wppc_settings['views_position'])){
-                $position = $wppc_settings['views_position'];
+            if(isset($wppc_setting['views_position'])){
+                $position = $wppc_setting['views_position'];
             }
             
             if($position == 'before_the_content'){
