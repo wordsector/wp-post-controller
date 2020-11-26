@@ -9,8 +9,8 @@ class WPPC_Db_Query {
         try {
                      
             global $wpdb;
-
-            $count = $wpdb->get_var("SELECT count_number FROM {$wpdb->prefix}wppc_post_views WHERE post_id = '{$post_id}' AND count_period = 'total'");
+            
+            $count = $wpdb->get_var($wpdb->prepare( "SELECT count_number FROM {$wpdb->prefix}wppc_post_views WHERE post_id = %d AND count_period = %s ", $post_id, 'total' ) );
             
             return $count;
 
@@ -25,8 +25,8 @@ class WPPC_Db_Query {
         try {
                      
             global $wpdb;
-
-            $count = $wpdb->get_var("SELECT count_number FROM {$wpdb->prefix}wppc_post_views WHERE post_id = '{$post_id}' AND count_period = '{$count_period}' AND count_type = '{$count_type}'");
+            
+            $count = $wpdb->get_var($wpdb->prepare( "SELECT count_number FROM {$wpdb->prefix}wppc_post_views WHERE post_id = %d AND count_period = %s AND count_type = %s ", $post_id, $count_period, $count_type ) );
             
             return $count;
 

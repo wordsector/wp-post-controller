@@ -90,3 +90,9 @@ function wppc_validate_nonce($data){
 
         return $response;
 }
+
+function wppc_activation_action(){
+
+        setup_database();
+
+}

@@ -17,6 +17,7 @@ class WPPC_Admin_Setting {
 
     private function __construct() {
 
+        add_action( 'plugins_loaded', array($this, 'wppc_setting_data' ));
         add_action( 'admin_menu', array($this, 'setting_menu') );                            
         add_action( 'admin_init', array($this, 'register_setting') );
         add_action( 'admin_enqueue_scripts', array($this,'enqueue_scripts') );
@@ -24,6 +25,28 @@ class WPPC_Admin_Setting {
         add_action( 'admin_footer', array($this, 'footer_content') );
                              
     }
+
+    public function default_setting(){
+        
+
+        $default['counter_mode']            = 'php';
+        $default['views_enable_on']['post'] = 1;
+        $default['views_column']            = 'enable';
+
+        return $default;
+
+    }
+
+    public function wppc_setting_data(){
+
+        global $wppc_setting; 
+        
+        $wppc_setting = get_option( 'wppc_setting', $this->default_setting());     
+
+        return $wppc_setting;
+
+    }
+
     public function enqueue_scripts($hook){
 
         $local = array(     
@@ -58,7 +81,7 @@ class WPPC_Admin_Setting {
 
     public function register_setting(){
 
-        register_setting( 'wppc-settings-group', 'wppc_settings' );
+        register_setting( 'wppc-settings-group', 'wppc_setting' );
 
         add_settings_section('wppc_post_views_section', __return_false(), '__return_false', 'wppc_post_views_section');
 
@@ -216,8 +239,7 @@ class WPPC_Admin_Setting {
 
     public function post_views_tab_callback(){
 
-        global $wppc_settings;  
-        $wppc_settings = get_option('wppc_settings');
+        global $wppc_setting;          
 
         ?>
 
@@ -237,7 +259,7 @@ class WPPC_Admin_Setting {
 
                     foreach ($post_types as $key => $value) {
                         
-                        echo '  <input class="wppc_pv_post_type" type="checkbox" name="wppc_settings[views_enable_on]['.esc_attr($key).']" value="1" '.(isset($wppc_settings["views_enable_on"][$key]) ? "checked": "").' /> ' . ucwords(wppc_escape_html($value));
+                        echo '  <input class="wppc_pv_post_type" type="checkbox" name="wppc_setting[views_enable_on]['.esc_attr($key).']" value="1" '.(isset($wppc_setting["views_enable_on"][$key]) ? "checked": "").' /> ' . ucwords(wppc_escape_html($value));
 
                     }
 
@@ -251,8 +273,8 @@ class WPPC_Admin_Setting {
             <tr valign="top">
             <th scope="row"><?php echo wppc_escape_html('Counter Mode'); ?></th>
             <td>
-                <input type="radio" id="php_counter_mode" name="wppc_settings[counter_mode]" value="php" <?php echo (isset($wppc_settings['counter_mode']) && $wppc_settings['counter_mode'] == 'php' ? 'checked' : '') ?> > <?php echo wppc_escape_html('PHP'); ?>
-                <input type="radio" id="ajax_counter_mode" name="wppc_settings[counter_mode]" value="ajax" <?php echo (isset($wppc_settings['counter_mode']) && $wppc_settings['counter_mode'] == 'ajax' ? 'checked' : '') ?> > <?php echo wppc_escape_html('AJAX'); ?>
+                <input type="radio" id="php_counter_mode" name="wppc_setting[counter_mode]" value="php" <?php echo (isset($wppc_setting['counter_mode']) && $wppc_setting['counter_mode'] == 'php' ? 'checked' : '') ?> > <?php echo wppc_escape_html('PHP'); ?>
+                <input type="radio" id="ajax_counter_mode" name="wppc_setting[counter_mode]" value="ajax" <?php echo (isset($wppc_setting['counter_mode']) && $wppc_setting['counter_mode'] == 'ajax' ? 'checked' : '') ?> > <?php echo wppc_escape_html('AJAX'); ?>
                 <p class="wppc-description"><?php echo wppc_escape_html('Select Ajax for accurate result, If you are using any cache plugin'); ?></p>    
             </td>
             </tr>                
@@ -260,8 +282,8 @@ class WPPC_Admin_Setting {
             <tr valign="top">
             <th scope="row"><?php echo wppc_escape_html('Views Column'); ?></th>
             <td>
-                <input type="radio" id="enable_views_column" name="wppc_settings[views_column]" value="enable" <?php echo (isset($wppc_settings['views_column']) && $wppc_settings['views_column'] == 'enable' ? 'checked' : '') ?> > <?php echo wppc_escape_html('Enable'); ?>
-                <input type="radio" id="disable_views_column" name="wppc_settings[views_column]" value="disable" <?php echo (isset($wppc_settings['views_column']) && $wppc_settings['views_column'] == 'disable' ? 'checked' : '') ?> > <?php echo wppc_escape_html('Disable'); ?>
+                <input type="radio" id="enable_views_column" name="wppc_setting[views_column]" value="enable" <?php echo (isset($wppc_setting['views_column']) && $wppc_setting['views_column'] == 'enable' ? 'checked' : '') ?> > <?php echo wppc_escape_html('Enable'); ?>
+                <input type="radio" id="disable_views_column" name="wppc_setting[views_column]" value="disable" <?php echo (isset($wppc_setting['views_column']) && $wppc_setting['views_column'] == 'disable' ? 'checked' : '') ?> > <?php echo wppc_escape_html('Disable'); ?>
                 <p class="wppc-description"><?php echo wppc_escape_html('Enables a post view count column in above selected post type List'); ?></p>
             </td>
             </tr>
@@ -273,10 +295,10 @@ class WPPC_Admin_Setting {
             <tr valign="top">
             <th scope="row"><?php echo wppc_escape_html('Position'); ?></th>
             <td>
-                <select name="wppc_settings[views_position]">
+                <select name="wppc_setting[views_position]">
                     <option value=""><?php echo wppc_escape_html('Select Position'); ?></option>
-                    <option value="before_the_content" <?php echo (isset($wppc_settings['views_position']) && $wppc_settings['views_position'] == 'before_the_content' ? 'selected' : '' ); ?> ><?php echo wppc_escape_html('Before The Content'); ?></option>
-                    <option value="after_the_content" <?php echo (isset($wppc_settings['views_position']) && $wppc_settings['views_position'] == 'after_the_content' ? 'selected' : '' ); ?> ><?php echo wppc_escape_html('After The Content'); ?></option>
+                    <option value="before_the_content" <?php echo (isset($wppc_setting['views_position']) && $wppc_setting['views_position'] == 'before_the_content' ? 'selected' : '' ); ?> ><?php echo wppc_escape_html('Before The Content'); ?></option>
+                    <option value="after_the_content" <?php echo (isset($wppc_setting['views_position']) && $wppc_setting['views_position'] == 'after_the_content' ? 'selected' : '' ); ?> ><?php echo wppc_escape_html('After The Content'); ?></option>
                 </select>
                 <p class="wppc-description"><?php echo wppc_escape_html('Show particular post views to your users. If You do not wish to show to users, Don\'t select position'); ?></p>
             </td>

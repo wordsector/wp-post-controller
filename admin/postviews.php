@@ -43,7 +43,7 @@ class WPPC_Post_Views {
         
          if(isset($_POST['post_id'])){
 
-            $post_id = $_POST['post_id'];
+            $post_id = intval($_POST['post_id']);
             $this->query->set_post_view($post_id);
 
          }
