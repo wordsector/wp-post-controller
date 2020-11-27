@@ -18,10 +18,8 @@ class WPPC_Post_Views {
     private function __construct() {             
 
         if($this->query == null){
-
             require_once WPPC_PLUGIN_DIR_PATH .'admin/dbquery.php';
             $this->query = new WPPC_Db_Query();
-
         }        
         
         add_action( 'wp_ajax_nopriv_wppc_set_post_views_ajax', array($this, 'set_post_views_via_ajax') );  

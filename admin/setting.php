@@ -5,7 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class WPPC_Admin_Setting {
 
-    private static $instance;   
+    private static $instance;  
+    private $query = null; 
 
     public static function get_instance() {
             
@@ -17,11 +18,17 @@ class WPPC_Admin_Setting {
 
     private function __construct() {
 
+        if($this->query == null){
+            require_once WPPC_PLUGIN_DIR_PATH .'admin/dbquery.php';
+            $this->query = new WPPC_Db_Query();
+        }
+
         add_action( 'plugins_loaded', array($this, 'wppc_setting_data' ));
         add_action( 'admin_menu', array($this, 'setting_menu') );                            
         add_action( 'admin_init', array($this, 'register_setting') );
         add_action( 'admin_enqueue_scripts', array($this,'enqueue_scripts') );
         add_action( 'wp_ajax_wppc_send_query', array($this, 'send_query') );
+        add_action( 'wp_ajax_wppc_reset_post_views', array($this, 'reset_post_views') );
         add_action( 'admin_footer', array($this, 'footer_content') );
                              
     }
@@ -107,15 +114,35 @@ class WPPC_Admin_Setting {
 
     }
 
+    public function reset_post_views(){
+        
+        if(!wppc_validate_nonce($_POST)){
+            return;
+        }
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return;
+        }        
+        $result = $this->query->delete_post_views();
+        update_option('wppc_reset_notice_box', 'show');
+
+        if($result){            
+            echo json_encode(array('status'=>'success'));  
+
+         }else{
+
+            echo json_encode(array('status'=>'error'));            
+
+         }
+
+         wp_die();   
+
+    }
+
     public function send_query(){
         
-         if ( ! isset( $_POST['wppc_nonce'] ) ){
-            return; 
-         }
-        
-         if ( !wp_verify_nonce( $_POST['wppc_nonce'], 'wppc_check_nonce' ) ){
-            return;  
-         }            
+        if(!wppc_validate_nonce($_POST)){
+            return;
+        }            
          
          $message        = sanitize_textarea_field($_POST['message']); 
          $email          = sanitize_textarea_field($_POST['email']);          
@@ -287,6 +314,15 @@ class WPPC_Admin_Setting {
                 <p class="wppc-description"><?php echo wppc_escape_html('Enables a post view count column in above selected post type List'); ?></p>
             </td>
             </tr>
+
+            <tr valign="top">
+            <th scope="row"><?php echo wppc_escape_html('Reset Post Views'); ?></th>
+            <td>
+                <a class="button button-default wppc-pv-reset-btn"><?php echo wppc_escape_html('Reset'); ?></a>
+                <p class="wppc-description"><?php echo wppc_escape_html('Delete post views of all the posts for fresh starts.'); ?></p>
+            </td>
+            </tr>
+
         </table>
 
         <h3><?php echo wppc_escape_html('Frontend Setting'); ?></h3>

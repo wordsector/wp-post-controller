@@ -2,6 +2,26 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+add_action( 'admin_notices', 'wppc_custom_notices' );
+
+function wppc_custom_notices(){
+
+        $current_screen = get_current_screen();
+        $reset          = get_option('wppc_reset_notice_box');        
+        
+        if( $reset == 'show' && is_object($current_screen) && ($current_screen->parent_base == 'wp_post_controller_setting') ){
+
+                ?>
+                        <div id="setting-error-settings_updated" class="notice notice-success settings-error is-dismissible"> 
+                                <p><strong><?php echo wppc_escape_html('Reset Successfully'); ?></strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+                        </div>
+                <?php        
+
+                delete_option('wppc_reset_notice_box');
+        }        
+
+}
+
 add_action( 'admin_enqueue_scripts', 'wppc_enqueue_scripts' );
 
 function wppc_enqueue_scripts( $hook ) {                                        

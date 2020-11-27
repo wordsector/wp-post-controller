@@ -1,6 +1,30 @@
 jQuery(document).ready(function($){
 
-         
+    $(".wppc-pv-reset-btn").on("click", function(e){
+        e.preventDefault();
+
+        var sure = confirm("Are you sure ? It will delete your all previous post views data.");
+        
+        if(sure == true){
+
+            $.ajax({
+                type: "POST",    
+                url:ajaxurl,                    
+                dataType: "json",
+                data:{action:"wppc_reset_post_views", wppc_nonce:wppc_local.wppc_nonce},
+                success:function(response){                       
+                    window.location.reload();
+                },
+                error: function(response){                    
+                    console.log(response);
+                }
+                });  
+
+        }        
+
+    });
+
+    
     function wppcGetParameterByName(name, url) {
         if (!url){
         url = window.location.href;    

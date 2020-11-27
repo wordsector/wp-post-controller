@@ -3,6 +3,28 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class WPPC_Db_Query {
+
+    public function delete_post_views(){
+
+        try {
+                     
+            global $wpdb;
+
+            $result = null;
+
+            $found_tables = $wpdb->get_col("SHOW TABLES LIKE '{$wpdb->prefix}wppc%';");	
+
+            if(in_array("{$wpdb->prefix}wppc_post_views", $found_tables)) {
+                $result =   $wpdb->query("TRUNCATE TABLE {$wpdb->prefix}wppc_post_views");
+            }
+                                    
+            return $result;
+
+        } catch (\Exception $ex) {
+            echo $ex->getMessage();
+        }
+
+    }
     
     public function get_total_count_by_post($post_id){
 
