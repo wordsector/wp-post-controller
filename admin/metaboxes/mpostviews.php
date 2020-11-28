@@ -38,15 +38,24 @@ class WPPC_Post_Views_Meta_Box {
      * Adds the meta box.
      */
     public function add_metabox() {
-        add_meta_box(
-            'wppc-post-views-meta-box',
-            wppc_escape_html('Post Views'),
-            array( $this, 'render_metabox' ),
-            'post',
-            'side',
-            'low'
-        );
- 
+        
+        global $wppc_setting;
+        
+        if(isset($wppc_setting['views_enable_on'])){
+
+            $post_types = array_keys($wppc_setting['views_enable_on']);
+
+            add_meta_box(
+                'wppc-post-views-meta-box',
+                 wppc_escape_html('Post Views'),
+                 array( $this, 'render_metabox' ),
+                 $post_types,
+                'side',
+                'low'
+            );
+
+        }
+         
     }
  
     /**
