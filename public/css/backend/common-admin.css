@@ -4,3 +4,12 @@
 .column-wppc_post_views{
     width: 100px;
 }
+.wppc-rpv-metabox{
+    padding-top: 10px;
+}
+.wppc-rpv-c-span{
+    font-weight: 600;    
+}
+.wppc-rpv-right-span{
+    margin-left: 100px !important;
+}

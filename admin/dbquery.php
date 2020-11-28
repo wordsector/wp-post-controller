@@ -4,6 +4,25 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class WPPC_Db_Query {
 
+    public function delete_post_views_by_post_id( $post_id ){
+
+        try {
+
+            global $wpdb;
+
+            $table_name = $wpdb->prefix . 'wppc_post_views';
+            $result = $wpdb->query( 
+                        $wpdb->prepare( "DELETE FROM $table_name WHERE post_id = %d", $post_id )
+                    );
+
+            return $result;        
+
+        } catch (\Exception $ex) {
+            echo $ex->getMessage();
+        }
+
+    }
+
     public function delete_post_views(){
 
         try {
@@ -34,7 +53,11 @@ class WPPC_Db_Query {
             
             $count = $wpdb->get_var($wpdb->prepare( "SELECT count_number FROM {$wpdb->prefix}wppc_post_views WHERE post_id = %d AND count_period = %s ", $post_id, 'total' ) );
             
-            return $count;
+            if($count){
+                return $count;
+            }else{
+                return 0;
+            }            
 
         } catch (\Exception $ex) {
             echo $ex->getMessage();

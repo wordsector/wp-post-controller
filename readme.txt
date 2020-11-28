@@ -1,6 +1,6 @@
 ﻿=== WP Post Controller ===
 Contributors: WordSector
-Tags: PostView, PostCount, Manager, Controller, Post, Counter
+Tags: PostView, PostCount, Manager, Controller, Post, Counter, Control, Master
 Requires at least: 4.0
 Tested up to: 5.5.3
 Stable tag: 1.2

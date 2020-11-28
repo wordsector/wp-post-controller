@@ -28,3 +28,5 @@ require_once WPPC_PLUGIN_DIR_PATH .'admin/common.php';
 require_once WPPC_PLUGIN_DIR_PATH .'admin/setting.php';
 require_once WPPC_PLUGIN_DIR_PATH .'admin/dbmapper.php';
 require_once WPPC_PLUGIN_DIR_PATH .'admin/postviews.php';
+
+require_once WPPC_PLUGIN_DIR_PATH .'admin/metaboxes/mpostviews.php';
