@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Plugin to control and add more advanced features in posts.
+All in one solution for posts. Get Multiple features in one place
 
 ### Features 
 
@@ -22,6 +22,13 @@ Plugin to control and add more advanced features in posts.
 * <strong>More Features</strong>: Comming soon. Please stay tune to us.
 
 
+### Support
+
+We try to give our best to solve issues on WordPress.org forums. However, One can contact us through plugin admin panel.
+
+### Bug Reports
+
+Bug Reports are [welcomed on GitHub]( https://github.com/wordsector/wp-post-controller/issues ). GitHub is not a support forum, and issues that are not properly qualified as bugs would be closed.
 
 == Changelog ==
 

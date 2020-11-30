@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP Post Controller
-Description: Plugin to control and add more advanced features in posts
+Description: All in one solution for posts. Get Multiple features in one place
 Version: 1.3
 Text Domain: wp-post-controller
 Domain Path: /languages
