@@ -71,7 +71,7 @@ class WPPC_Post_Views_Meta_Box {
         
         <div>
             <div class="wppc-rpv-metabox">
-                <span class="wppc-rpv-c-span"><?php echo wppc_escape_html('View :') ?> </span> <span class="wppc-rpv-right-span"><?php echo esc_html($count); ?></span> 
+                <span class="wppc-rpv-c-span"><?php echo wppc_escape_html('Viewed :') ?> </span> <span class="wppc-rpv-right-span"><?php echo esc_html($count); ?></span> 
             </div>
             <div class="wppc-rpv-metabox">
                 <label for="wppc_reset_post_view"> <span class="wppc-rpv-c-span"><?php echo wppc_escape_html('Reset :') ?></span><input class="wppc-rpv-right-span" id="wppc_reset_post_view" type="checkbox" name="wppc_reset_post_view" value="1" /></label>
