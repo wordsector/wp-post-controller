@@ -1,5 +1,13 @@
 jQuery(document).ready(function($){
 
+    $(".wppc_position_select").on("change", function(){
+
+        if($(this).val() == 'shortcode'){
+            $(".wppc_shortcode_input").removeClass('wppc_hide_element');
+        }else{
+            $(".wppc_shortcode_input").addClass('wppc_hide_element');
+        }
+    });
     $(".wppc-pv-reset-btn").on("click", function(e){
         e.preventDefault();
 

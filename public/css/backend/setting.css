@@ -24,3 +24,12 @@
 .wppc_pv_post_type{
     margin-right: 2px;
 }
+.wppc-post_views select{
+    width: 30%;
+}
+.wppc-post_views input[type="text"]{
+    width: 30%;
+}
+.wppc_shortcode_input{
+    margin-top: 5px;
+}

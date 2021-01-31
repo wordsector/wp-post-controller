@@ -2,8 +2,8 @@
 Contributors: WordSector
 Tags: PostView, PostCount, Manager, Controller, Post, Counter, Control, Master, Post View
 Requires at least: 4.0
-Tested up to: 5.5.3
-Stable tag: 1.3
+Tested up to: 5.6
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,10 @@ We try to give our best to solve issues on WordPress.org forums. However, One ca
 Bug Reports are [welcomed on GitHub]( https://github.com/wordsector/wp-post-controller/issues ). GitHub is not a support forum, and issues that are not properly qualified as bugs would be closed.
 
 == Changelog ==
+
+= 1.4 =
+
+* Fixed: Compatibility with wordpress version 5.6
 
 = 1.3 =
 

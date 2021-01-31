@@ -331,11 +331,23 @@ class WPPC_Admin_Setting {
             <tr valign="top">
             <th scope="row"><?php echo wppc_escape_html('Position'); ?></th>
             <td>
-                <select name="wppc_setting[views_position]">
+                <div>
+                <select class="wppc_position_select" name="wppc_setting[views_position]">
                     <option value=""><?php echo wppc_escape_html('Select Position'); ?></option>
                     <option value="before_the_content" <?php echo (isset($wppc_setting['views_position']) && $wppc_setting['views_position'] == 'before_the_content' ? 'selected' : '' ); ?> ><?php echo wppc_escape_html('Before The Content'); ?></option>
                     <option value="after_the_content" <?php echo (isset($wppc_setting['views_position']) && $wppc_setting['views_position'] == 'after_the_content' ? 'selected' : '' ); ?> ><?php echo wppc_escape_html('After The Content'); ?></option>
+                    <option value="shortcode" <?php echo (isset($wppc_setting['views_position']) && $wppc_setting['views_position'] == 'shortcode' ? 'selected' : '' ); ?> ><?php echo wppc_escape_html('Shortcode'); ?></option>
                 </select>
+                </div>
+                <?php  if( isset($wppc_setting['views_position']) && $wppc_setting['views_position'] == 'shortcode' ){                    
+                    echo '<div class="wppc_shortcode_input">';
+                }else{
+                    echo '<div class="wppc_shortcode_input wppc_hide_element">';
+                }
+                  ?>
+
+                <input type="text" value="[wppc_post_views =&quot;your post id&quot;]" readonly />                                
+                </div>
                 <p class="wppc-description"><?php echo wppc_escape_html('Show particular post views to your users. If You do not wish to show to users, Don\'t select position'); ?></p>
             </td>
             </tr>

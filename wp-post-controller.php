@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Post Controller
 Description: All in one solution for posts. Get Multiple features in one place
-Version: 1.3
+Version: 1.4
 Text Domain: wp-post-controller
 Domain Path: /languages
 Author: WordSector
@@ -13,7 +13,7 @@ License: GPL2
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define('WPPC_VERSION', '1.3');
+define('WPPC_VERSION', '1.4');
 define('WPPC_DIR_NAME_FILE', __FILE__ );
 define('WPPC_DIR_URI', plugin_dir_url(__FILE__));
 define('WPPC_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ));
