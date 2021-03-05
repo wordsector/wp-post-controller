@@ -36,9 +36,11 @@ class WPPC_Admin_Setting {
     public function default_setting(){
         
 
-        $default['counter_mode']            = 'php';
-        $default['views_enable_on']['post'] = 1;
-        $default['views_column']            = 'enable';
+        $default['counter_mode']                        = 'php';
+        $default['views_enable_on']['post']             = 1;
+        $default['clone_enable_on']['post']             = 1;
+        $default['clone_show_action_link']['post_list'] = 1;
+        $default['views_column']                        = 'enable';
 
         return $default;
 
@@ -84,35 +86,7 @@ class WPPC_Admin_Setting {
              WPPC_PLUGIN_URL.'public/images/post-controller.png' 
         );
 
-    }
-
-    public function register_setting(){
-
-        register_setting( 'wppc-settings-group', 'wppc_setting' );
-
-        add_settings_section('wppc_post_views_section', __return_false(), '__return_false', 'wppc_post_views_section');
-
-        add_settings_field(
-            'post_views_settings',								
-            '',
-            array($this, 'post_views_tab_callback'),					
-            'wppc_post_views_section',						
-            'wppc_post_views_section',
-            array('class' => 'wppc-tab-first-tr')						
-        );
-
-        add_settings_section('wppc_support_section', __return_false(), '__return_false', 'wppc_support_section');
-
-        add_settings_field(
-            'support_settings',
-            '',		
-            array($this, 'support_tab_callback'),
-            'wppc_support_section',
-            'wppc_support_section',
-            array('class' => 'wppc-tab-first-tr')						
-        );
-
-    }
+    }    
 
     public function reset_post_views(){
         
@@ -185,6 +159,45 @@ class WPPC_Admin_Setting {
 
     }
 
+    public function register_setting(){
+
+        register_setting( 'wppc-settings-group', 'wppc_setting' );
+
+        add_settings_section('wppc_post_views_section', __return_false(), '__return_false', 'wppc_post_views_section');
+
+        add_settings_field(
+            'post_views_settings',								
+            '',
+            array($this, 'post_views_tab_callback'),					
+            'wppc_post_views_section',						
+            'wppc_post_views_section',
+            array('class' => 'wppc-tab-first-tr')						
+        );
+
+        add_settings_section('wppc_post_clone_section', __return_false(), '__return_false', 'wppc_post_clone_section');
+
+        add_settings_field(
+            'post_clone_settings',								
+            '',
+            array($this, 'post_clone_tab_callback'),					
+            'wppc_post_clone_section',						
+            'wppc_post_clone_section',
+            array('class' => 'wppc-tab-first-tr')						
+        );
+
+        add_settings_section('wppc_support_section', __return_false(), '__return_false', 'wppc_support_section');
+
+        add_settings_field(
+            'support_settings',
+            '',		
+            array($this, 'support_tab_callback'),
+            'wppc_support_section',
+            'wppc_support_section',
+            array('class' => 'wppc-tab-first-tr')						
+        );
+
+    }
+
     public function setting_interface(){
 	            
         if ( ! current_user_can( 'manage_options' ) ) {
@@ -195,7 +208,7 @@ class WPPC_Admin_Setting {
             settings_errors();               
         }
                    
-        $setting_tab = wppc_selected_tab('post_views', array('post_views', 'support'));            
+        $setting_tab = wppc_selected_tab('post_views', array('post_views', 'support', 'post_clone'));            
     
         ?>
         <div class="wppc-setting-container">
@@ -205,6 +218,7 @@ class WPPC_Admin_Setting {
         <h2 class="nav-tab-wrapper wppc-tabs">                    
             <?php			    
                         echo '<a href="' . esc_url(wppc_selected_tab_url('post_views')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'post_views' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Post Views') . '</a>';                                                           
+                        echo '<a href="' . esc_url(wppc_selected_tab_url('post_clone')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'post_clone' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Post Clone') . '</a>';                                                           
                         echo '<a href="' . esc_url(wppc_selected_tab_url('support')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'support' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Support') . '</a>';                                                                                                                                                                                                                                                                  
             ?>                    
         </h2>                                                            
@@ -219,6 +233,11 @@ class WPPC_Admin_Setting {
                     echo "<div class='wppc-post_views' ".( $setting_tab != 'post_views' ? 'style="display:none;"' : '').">";                                                            
                     
                         do_settings_sections( 'wppc_post_views_section' );	
+                    echo "</div>";
+
+                    echo "<div class='wppc-post_clone' ".( $setting_tab != 'post_clone' ? 'style="display:none;"' : '').">";                                                            
+                    
+                        do_settings_sections( 'wppc_post_clone_section' );	
                     echo "</div>";
                                                                                 
                     echo "<div class='wppc-support' ".( $setting_tab != 'support' ? 'style="display:none;"' : '').">";
@@ -263,7 +282,52 @@ class WPPC_Admin_Setting {
 
     }
     
+    public function post_clone_tab_callback(){
 
+        global $wppc_setting; 
+        
+        ?>
+        <div class="wrap">        
+
+        <table class="form-table">  
+
+        <tr valign="top">
+            <th scope="row"><?php echo wppc_escape_html('Enable On'); ?></th>
+            <td>
+
+                <?php
+                
+                $post_types = array();
+
+                $post_types['post'] = 'post';
+                $post_types['page'] = 'page';
+                
+                if($post_types){
+
+                    foreach ($post_types as $key => $value) {
+                        
+                        echo '  <input class="wppc_pv_post_type" type="checkbox" name="wppc_setting[clone_enable_on]['.esc_attr($key).']" value="1" '.(isset($wppc_setting["clone_enable_on"][$key]) ? "checked": "").' /> ' . ucwords(wppc_escape_html($value));
+
+                    }
+
+                }
+
+                ?>                
+                <p class="wppc-description"> <?php echo wppc_escape_html('Select the post type whom you want to be cloned'); ?> </p>
+            </td>
+            </tr>
+
+            <tr valign="top">
+                <th scope="row"><?php echo wppc_escape_html('Show Action Link In'); ?></th>
+                <td>
+                    <input class="wppc_pv_post_type" type="checkbox" name="wppc_setting[clone_show_action_link][post_list]" value="1" <?php echo (isset($wppc_setting["clone_show_action_link"]['post_list']) ? "checked": ""); ?> ><?php echo wppc_escape_html('Post List'); ?>
+                </td>
+            </tr>    
+        </table>
+        </div>
+        <?php
+
+    }
     public function post_views_tab_callback(){
 
         global $wppc_setting;          
