@@ -40,6 +40,7 @@ class WPPC_Admin_Setting {
         $default['views_enable_on']['post']             = 1;
         $default['clone_enable_on']['post']             = 1;
         $default['clone_show_action_link']['post_list'] = 1;
+        $default["filter_post_option"]['author']        = 1;
         $default['views_column']                        = 'enable';
 
         return $default;
@@ -185,6 +186,17 @@ class WPPC_Admin_Setting {
             array('class' => 'wppc-tab-first-tr')						
         );
 
+        add_settings_section('wppc_post_filters_section', __return_false(), '__return_false', 'wppc_post_filters_section');
+
+        add_settings_field(
+            'post_filters_settings',								
+            '',
+            array($this, 'post_filters_tab_callback'),					
+            'wppc_post_filters_section',						
+            'wppc_post_filters_section',
+            array('class' => 'wppc-tab-first-tr')						
+        );
+
         add_settings_section('wppc_support_section', __return_false(), '__return_false', 'wppc_support_section');
 
         add_settings_field(
@@ -208,7 +220,7 @@ class WPPC_Admin_Setting {
             settings_errors();               
         }
                    
-        $setting_tab = wppc_selected_tab('post_views', array('post_views', 'support', 'post_clone'));            
+        $setting_tab = wppc_selected_tab('post_views', array('post_views', 'post_clone', 'post_filters', 'support',));            
     
         ?>
         <div class="wppc-setting-container">
@@ -217,9 +229,10 @@ class WPPC_Admin_Setting {
         <div>
         <h2 class="nav-tab-wrapper wppc-tabs">                    
             <?php			    
-                        echo '<a href="' . esc_url(wppc_selected_tab_url('post_views')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'post_views' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Post Views') . '</a>';                                                           
-                        echo '<a href="' . esc_url(wppc_selected_tab_url('post_clone')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'post_clone' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Post Clone') . '</a>';                                                           
-                        echo '<a href="' . esc_url(wppc_selected_tab_url('support')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'support' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Support') . '</a>';                                                                                                                                                                                                                                                                  
+                        echo '<a href="' . esc_url(wppc_selected_tab_url('post_views')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'post_views' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Post Views') . '</a>';
+                        echo '<a href="' . esc_url(wppc_selected_tab_url('post_clone')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'post_clone' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Post Clone') . '</a>';
+                        echo '<a href="' . esc_url(wppc_selected_tab_url('post_filters')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'post_filters' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Post Filters') . '</a>';
+                        echo '<a href="' . esc_url(wppc_selected_tab_url('support')) . '" class="nav-tab ' . esc_attr( $setting_tab == 'support' ? 'nav-tab-active' : '') . '"><span class=""></span> ' . wppc_escape_html('Support') . '</a>';                                                 
             ?>                    
         </h2>                                                            
             </div>
@@ -238,6 +251,11 @@ class WPPC_Admin_Setting {
                     echo "<div class='wppc-post_clone' ".( $setting_tab != 'post_clone' ? 'style="display:none;"' : '').">";                                                            
                     
                         do_settings_sections( 'wppc_post_clone_section' );	
+                    echo "</div>";
+
+                    echo "<div class='wppc-post_filters' ".( $setting_tab != 'post_filters' ? 'style="display:none;"' : '').">";                                                            
+                    
+                        do_settings_sections( 'wppc_post_filters_section' );	
                     echo "</div>";
                                                                                 
                     echo "<div class='wppc-support' ".( $setting_tab != 'support' ? 'style="display:none;"' : '').">";
@@ -282,6 +300,24 @@ class WPPC_Admin_Setting {
 
     }
     
+    public function post_filters_tab_callback(){
+        global $wppc_setting; 
+        ?>
+        <div class="wrap">        
+
+            <table class="form-table">  
+
+            <tr valign="top">
+                <th scope="row"><?php echo wppc_escape_html('Filter By Author'); ?></th>
+                <td>
+                <input class="wppc_pv_post_type" type="checkbox" name="wppc_setting[filter_post_option][author]" value="1" <?php echo (isset($wppc_setting["filter_post_option"]['author']) ? "checked": ""); ?> >
+                <p><?php echo wppc_escape_html('It shows a dropdown with Author list in post admin panel'); ?></p>
+                </td>
+            </tr>
+            </table>
+        <?php
+    }
+
     public function post_clone_tab_callback(){
 
         global $wppc_setting; 
