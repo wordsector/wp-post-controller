@@ -3,7 +3,7 @@ Contributors: WordSector
 Tags: PostView, PostCount, Manager, Controller, Post, Counter, Control, Master, Post View, Post Clone, Duplicate
 Requires at least: 4.0
 Tested up to: 5.7
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,10 @@ We try to give our best to solve issues on WordPress.org forums. However, One ca
 Bug Reports are [welcomed on GitHub]( https://github.com/wordsector/wp-post-controller/issues ). GitHub is not a support forum, and issues that are not properly qualified as bugs would be closed.
 
 == Changelog ==
+
+= 1.6 =
+
+* Added: Post Filters.
 
 = 1.5 =
 

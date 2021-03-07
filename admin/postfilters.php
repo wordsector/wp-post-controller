@@ -48,7 +48,7 @@ class WPPC_Post_Filters {
             );
             
             if (isset($_GET['author_admin_filter'])) {                
-                $user_args['selected'] = (int) sanitize_text_field($_GET['author_admin_filter']);
+                $user_args['selected'] = intval($_GET['author_admin_filter']);
             }
 
             wp_dropdown_users($user_args); 
@@ -65,7 +65,7 @@ class WPPC_Post_Filters {
 
             if (isset($_GET['author_admin_filter'])) {
                 
-                $author_id = sanitize_text_field($_GET['author_admin_filter']);
+                $author_id = intval($_GET['author_admin_filter']);
                 
                 if (0 !== $author_id) {
                     $query->query_vars['author'] = $author_id;
