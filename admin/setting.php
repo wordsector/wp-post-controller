@@ -311,9 +311,18 @@ class WPPC_Admin_Setting {
                 <th scope="row"><?php echo wppc_escape_html('Filter By Author'); ?></th>
                 <td>
                 <input class="wppc_pv_post_type" type="checkbox" name="wppc_setting[filter_post_option][author]" value="1" <?php echo (isset($wppc_setting["filter_post_option"]['author']) ? "checked": ""); ?> >
-                <p><?php echo wppc_escape_html('It shows a dropdown with Author or above it list in post admin panel'); ?></p>
+                <p><?php echo wppc_escape_html('It shows a dropdown with Author or above it in post admin panel'); ?></p>
                 </td>
             </tr>
+
+            <tr valign="top">
+                <th scope="row"><?php echo wppc_escape_html('Filter By Tag'); ?></th>
+                <td>
+                <input class="wppc_pv_post_type" type="checkbox" name="wppc_setting[filter_post_option][tag]" value="1" <?php echo (isset($wppc_setting["filter_post_option"]['tag']) ? "checked": ""); ?> >
+                <p><?php echo wppc_escape_html('It shows a dropdown with tag list in post admin panel'); ?></p>
+                </td>
+            </tr>
+
             </table>
         <?php
     }
