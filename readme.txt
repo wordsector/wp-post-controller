@@ -1,9 +1,9 @@
 ﻿=== WP Post Controller ===
 Contributors: WordSector
-Tags: PostView, PostCount, Manager, Controller, Post, Counter, Control, Master, Post View, Post Clone, Duplicate
+Tags: PostView, PostCount, Manager, Controller, Post, Counter, Control, Master, Post View, Post Clone, Duplicate, Filter, Post Filter, Author
 Requires at least: 4.0
 Tested up to: 5.7
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,8 @@ All in one solution for posts. Get Multiple features in one place
 
 ### Features 
 
+* <strong>Post Filters</strong>: Filter the post by different custom options. such as Author, Tag, Date Range etc.
+* <strong>Post Clone</strong>: One can clone a post to a new post
 * <strong>Post Views</strong>: One can see and display post views.
 * <strong>Counter Mode</strong>: Php and Ajax.
 * <strong>Custom Post Type Views </strong>: One can select custom post types from the option to enable views.
@@ -31,6 +33,10 @@ We try to give our best to solve issues on WordPress.org forums. However, One ca
 Bug Reports are [welcomed on GitHub]( https://github.com/wordsector/wp-post-controller/issues ). GitHub is not a support forum, and issues that are not properly qualified as bugs would be closed.
 
 == Changelog ==
+
+= 1.7 =
+
+* Added: Post Filter by Tag and Date Range.
 
 = 1.6 =
 
