@@ -1,0 +1,7 @@
+input[name="wppc_filter_date_from"], input[name="wppc_filter_date_to"] {
+    line-height: 28px;
+    height: 28px;
+    margin: 0;
+    margin-right: 5px;
+    width:125px;
+}

@@ -304,7 +304,37 @@ class WPPC_Admin_Setting {
         global $wppc_setting; 
         ?>
         <div class="wrap">        
+            <h3><?php echo wppc_escape_html('Post Types'); ?></h3>    
+            <table class="form-table">
 
+            <tr valign="top">
+            <th scope="row"><?php echo wppc_escape_html('Enable On'); ?></th>
+            <td>
+
+                <?php
+                
+                $post_types = array();
+
+                $post_types['post'] = 'post';                
+                
+                if($post_types){
+
+                    foreach ($post_types as $key => $value) {
+                        
+                        echo '  <input class="wppc_pv_post_type" type="checkbox" name="wppc_setting[filter_enable_on]['.esc_attr($key).']" value="1" '.(isset($wppc_setting["filter_enable_on"][$key]) ? "checked": "").' /> ' . ucwords(wppc_escape_html($value));
+
+                    }
+
+                }
+
+                ?>                
+                <p class="wppc-description"> <?php echo wppc_escape_html('Select the post type where you want to display filters'); ?> </p>
+            </td>
+            </tr>
+
+            </table>
+
+            <h3><?php echo wppc_escape_html('Filter Options'); ?></h3>    
             <table class="form-table">  
 
             <tr valign="top">
@@ -320,6 +350,14 @@ class WPPC_Admin_Setting {
                 <td>
                 <input class="wppc_pv_post_type" type="checkbox" name="wppc_setting[filter_post_option][tag]" value="1" <?php echo (isset($wppc_setting["filter_post_option"]['tag']) ? "checked": ""); ?> >
                 <p><?php echo wppc_escape_html('It shows a dropdown with tag list in post admin panel'); ?></p>
+                </td>
+            </tr>
+
+            <tr valign="top">
+                <th scope="row"><?php echo wppc_escape_html('Filter By Custom Date Range '); ?></th>
+                <td>
+                <input class="wppc_pv_post_type" type="checkbox" name="wppc_setting[filter_post_option][date_range]" value="1" <?php echo (isset($wppc_setting["filter_post_option"]['date_range']) ? "checked": ""); ?> >
+                <p><?php echo wppc_escape_html('It shows a date range fields in post admin panel'); ?></p>
                 </td>
             </tr>
 
